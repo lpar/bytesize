@@ -40,5 +40,5 @@ Also, it doesn't handle parsing.
 
 ## Additional information
 
- * https://en.wikipedia.org/wiki/Binary\_prefix
+ * https://en.wikipedia.org/wiki/Binary_prefix
  * http://lpar.ath0.com/2008/07/15/si-unit-prefixes-a-plea-for-sanity/ 
