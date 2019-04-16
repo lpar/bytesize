@@ -1,4 +1,4 @@
-// Package human provides a function for formatting and parsing quantities of 
+// Package human provides a function for formatting and parsing quantities of
 // data as human-readable values such as 1MB or 2.2GB.
 package bytesize
 
@@ -105,7 +105,7 @@ func split(s string) (string, string) {
 	s1 := make([]rune, 0, len(s))
 	s2 := make([]rune, 0, len(s))
 	for _, r := range s {
-		if unicode.IsDigit(r) && len(s2) == 0 {
+		if (unicode.IsDigit(r) || r == '.') && len(s2) == 0 {
 			s1 = append(s1, r)
 		} else {
 			if r != ' ' {
@@ -138,7 +138,7 @@ func ParseBytesFloat(s string) (float64, error) {
 }
 
 // ParseBytesFloat parses a human-readable quantity of bytes, and returns the
-// raw number of bytes as an int64. If the value is too large for an int64, 
+// raw number of bytes as an int64. If the value is too large for an int64,
 // an error value is returned.
 //
 // Whitespace is allowed between the number and the units. The 'B' for bytes
