@@ -29,6 +29,7 @@ type ParseTest struct {
 var ParseTests = []ParseTest{
 	ParseTest{"1KB", 1000},
 	ParseTest{"1KiB", 1024},
+	ParseTest{"1.5GiB", 1536 * 1024 * 1024},
 	ParseTest{"6GiB", 6 * 1024 * 1024 * 1024},
 }
 
