@@ -1,4 +1,4 @@
-// Package human provides a function for formatting and parsing quantities of
+// Package bytesize provides a function for formatting and parsing quantities of
 // data as human-readable values such as 1MB or 2.2GB.
 package bytesize
 
@@ -53,7 +53,7 @@ var multipliers = map[string]float64{
 //     FormatBytes(2000000000, 10, 2) => "2.00GB"
 //
 // If an invalid base or precision is given, a Sprintf-style error string
-// is returned.
+// is returned, starting %! followed by an error code in parentheses.
 func FormatBytes(bytes int64, base int, prec int) string {
 	if base != 10 && base != 2 {
 		return "%!(BADBASE)"
@@ -61,44 +61,36 @@ func FormatBytes(bytes int64, base int, prec int) string {
 	b := float64(bytes)
 	if base == 10 {
 		switch {
-		case b >= YB:
-			return fmt.Sprintf("%.*fYB", prec, float64(b/YB))
-		case b >= ZB:
-			return fmt.Sprintf("%.*fZB", prec, float64(b/ZB))
 		case b >= EB:
-			return fmt.Sprintf("%.*fEB", prec, float64(b/EB))
+			return fmt.Sprintf("%.*fEB", prec, b/EB)
 		case b >= PB:
-			return fmt.Sprintf("%.*fPB", prec, float64(b/PB))
+			return fmt.Sprintf("%.*fPB", prec, b/PB)
 		case b >= TB:
-			return fmt.Sprintf("%.*fTB", prec, float64(b/TB))
+			return fmt.Sprintf("%.*fTB", prec, b/TB)
 		case b >= GB:
-			return fmt.Sprintf("%.*fGB", prec, float64(b/GB))
+			return fmt.Sprintf("%.*fGB", prec, b/GB)
 		case b >= MB:
-			return fmt.Sprintf("%.*fMB", prec, float64(b/MB))
+			return fmt.Sprintf("%.*fMB", prec, b/MB)
 		case b >= KB:
-			return fmt.Sprintf("%.*fKB", prec, float64(b/KB))
+			return fmt.Sprintf("%.*fKB", prec, b/KB)
 		}
-		return fmt.Sprintf("%.*fB", prec, float64(b))
+		return fmt.Sprintf("%.*fB", prec, b)
 	}
 	switch {
-	case b >= YiB:
-		return fmt.Sprintf("%.*fYiB", prec, float64(b/YiB))
-	case b >= ZiB:
-		return fmt.Sprintf("%.*fZiB", prec, float64(b/ZiB))
 	case b >= EiB:
-		return fmt.Sprintf("%.*fEiB", prec, float64(b/EiB))
+		return fmt.Sprintf("%.*fEiB", prec, b/EiB)
 	case b >= PiB:
-		return fmt.Sprintf("%.*fPiB", prec, float64(b/PiB))
+		return fmt.Sprintf("%.*fPiB", prec, b/PiB)
 	case b >= TiB:
-		return fmt.Sprintf("%.*fTiB", prec, float64(b/TiB))
+		return fmt.Sprintf("%.*fTiB", prec, b/TiB)
 	case b >= GiB:
-		return fmt.Sprintf("%.*fGiB", prec, float64(b/GiB))
+		return fmt.Sprintf("%.*fGiB", prec, b/GiB)
 	case b >= MiB:
-		return fmt.Sprintf("%.*fMiB", prec, float64(b/MiB))
+		return fmt.Sprintf("%.*fMiB", prec, b/MiB)
 	case b >= KiB:
-		return fmt.Sprintf("%.*fKiB", prec, float64(b/KiB))
+		return fmt.Sprintf("%.*fKiB", prec, b/KiB)
 	}
-	return fmt.Sprintf("%.*fB", prec, float64(b))
+	return fmt.Sprintf("%.*fB", prec, b)
 }
 
 func split(s string) (string, string) {
@@ -137,7 +129,7 @@ func ParseBytesFloat(s string) (float64, error) {
 	return m * fb, nil
 }
 
-// ParseBytesFloat parses a human-readable quantity of bytes, and returns the
+// ParseBytes parses a human-readable quantity of bytes, and returns the
 // raw number of bytes as an int64. If the value is too large for an int64,
 // an error value is returned.
 //
